@@ -22,7 +22,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Hiten Desai",
+  "name": "Hiten D.",
   "url": "https://cyberhiten.github.io/",
   "jobTitle": "Information Security Officer",
   "description": "Information Security Officer working in GRC, security operations and audit in financial services and automotive.",
@@ -35,104 +35,203 @@
 {"@context": "https://schema.org", "@type": "WebSite", "name": "Hiten D.", "alternateName": "Hiten D. | Information Security & GRC", "url": "https://cyberhiten.github.io/", "inLanguage": "en"}
 </script>
 <style>
-:root{--bg:#fafbfd;--text:#161d27;--muted:#556070;--line:#dfe4ea;--accent:#0b5cad;--deep:#0a2a52;--chip:#edf2fa}
-@media (prefers-color-scheme:dark){:root{--bg:#0b1118;--text:#eef2f6;--muted:#9aa7b4;--line:#25303b;--accent:#6ea8ff;--deep:#c3d9ff;--chip:#15233a}}
+/* === design tokens === */
+:root{
+  --bg:#fafbfd; --text:#161d27; --muted:#556070; --line:#dfe4ea;
+  --accent:#0b5cad; --deep:#0a2a52; --chip:#edf2fa;
+  --sidebar-w:208px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0b1118; --text:#eef2f6; --muted:#9aa7b4; --line:#25303b;
+  --accent:#6ea8ff; --deep:#c3d9ff; --chip:#15233a;
+}}
 *{box-sizing:border-box}
-html{scroll-padding-top:3.5rem;-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
-.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+  letter-spacing:-.011em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
 a{color:var(--accent);text-underline-offset:3px}
 a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:3px}
-.bar{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
-@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.bar{background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px)}}
-.bar .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 24px;padding-top:6px;padding-bottom:6px}
-.bar nav{display:flex;flex-wrap:wrap;gap:0 22px}
-.bar a{display:inline-block;min-height:28px;padding:3px 0;font-size:.94rem;font-weight:500;text-decoration:none}
-.bar a:hover{text-decoration:underline}
-.hero{padding:16px 0 10px}
-.eyebrow{margin:0 0 6px;color:var(--accent);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
-h1{margin:0;font-size:clamp(2.4rem,6.5vw,3.4rem);font-weight:700;line-height:1.04;letter-spacing:-.035em}
-.lead{margin:10px 0 0;font-size:1.2rem;line-height:1.4}
-.sub{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin:12px 0 0;color:var(--muted);font-size:.9rem}
+
+/* === layout grid — 208px sidebar + 1fr main, gap:0, centred as one block === */
+/* Locked: no fractional sidebar track, no gap track. */
+.layout{
+  display:grid;
+  grid-template-columns:var(--sidebar-w) 1fr;
+  gap:0;                                /* no gutter between tracks */
+  max-width:1068px;                     /* 208px sidebar + 860px content */
+  margin:0 auto;                        /* centre the whole block in the viewport */
+  min-height:100vh;
+}
+
+/* === sticky sidebar — locked to 208px, no min/max stretch === */
+.sidebar{
+  position:sticky; top:0;
+  height:100vh;
+  width:var(--sidebar-w);
+  min-width:var(--sidebar-w);
+  max-width:var(--sidebar-w);
+  flex:0 0 var(--sidebar-w);             /* if it ever ends up in a flex context, lock it too */
+  background:var(--chip);
+  border-right:1px solid var(--line);
+  border-left:1px solid var(--line);
+  overflow-y:auto;
+  padding:132px 16px 18px 20px;          /* heading sits on the baseline of the hero .lead line */
+  z-index:5;
+  display:flex; flex-direction:column;
+  margin:0;
+}
+
+/* === main content — fills its 1fr track; overall width is capped on .layout === */
+.main{min-width:0;margin:0;padding:0}
+.wrap{max-width:none;margin:0;padding:0 24px 0 20px}    /* padding only */
+main{padding-bottom:10px}
+
+.sidebar .group{margin-bottom:18px}
+.sidebar .group h3{
+  margin:0 0 6px;
+  font-size:.78rem; font-weight:600;     /* same label style as .eyebrow */
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted);                    /* grey label; blue is reserved for links */
+}
+.sidebar .group + .group{border-top:1px solid var(--line);padding-top:14px}
+.sidebar .group ul{margin:0;padding:0;list-style:none}
+.sidebar .group li{padding:2px 0}
+.sidebar .group a{display:inline-block;color:var(--accent);
+                  text-decoration:underline;text-decoration-thickness:1px;
+                  text-decoration-color:color-mix(in srgb,var(--accent) 45%,transparent);
+                  font-size:.92rem;line-height:1.35;
+                  min-height:24px;padding:2px 0}
+.sidebar .group a:hover{text-decoration-color:currentColor}
+
+.hero{padding:18px 0 10px}
+.eyebrow{margin:0 0 6px;color:var(--accent);font-weight:600;
+         letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
+h1{margin:0;font-size:clamp(2.4rem,6.5vw,3.4rem);font-weight:700;
+   line-height:1.04;letter-spacing:-.035em}
+.lead{margin:10px 0 0;font-size:1.15rem;line-height:1.4}
+.sub{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;
+      margin:12px 0 0;color:var(--muted);font-size:.9rem}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
-.tags li{background:var(--chip);color:var(--accent);border-radius:999px;padding:2px 12px;font-weight:600;font-size:.9rem}
+.tags li{background:var(--chip);color:var(--accent);border-radius:999px;
+          padding:2px 12px;font-weight:600;font-size:.9rem}
+
 section{padding:4px 0 0}
 .rows{margin:0}
-.rows>div{display:grid;grid-template-columns:200px 1fr;gap:2px 24px;padding:5px 0;border-top:1px solid var(--line)}
+.rows>div{display:grid;grid-template-columns:180px 1fr;gap:2px 24px;
+          padding:5px 0;border-top:1px solid var(--line)}
 .rows>div:last-child{border-bottom:1px solid var(--line)}
 .rows dt{font-weight:700}
 .rows dd{margin:0}
-.proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 20px;margin:0;padding:0;list-style:none}
-.proj li{margin-bottom:2px}
-@supports (grid-template-rows:subgrid){.proj li{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0}}
-.proj h3{margin:0;font-size:.95rem;line-height:1.3}
-.proj h3 a{color:var(--deep);text-decoration:none}
-.proj h3 a:hover,.proj h3 a:focus-visible{text-decoration:underline}
-.proj p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.4}
-.tools span{display:grid;grid-template-columns:150px 1fr;gap:0 8px}
+.tools span{display:grid;grid-template-columns:160px 1fr;gap:0 12px;font-size:.92rem}
 .tools b{color:var(--muted);font-weight:600}
-.auto{display:inline-block;margin-left:4px;color:var(--accent);vertical-align:-1px}
-.auto svg{display:block;width:12px;height:12px}
-main{padding-bottom:10px}
-@media (max-width:640px){.rows>div{grid-template-columns:1fr}.tools span{grid-template-columns:1fr;margin-bottom:3px}}
+
+/* === responsive — sidebar moves below the content on narrow viewports === */
+@media (max-width:900px){
+  /* Below 900px the 208px sidebar + content gets too tight; collapse to single column. */
+  .layout{grid-template-columns:1fr;min-height:0}
+  .sidebar{position:static;order:2;height:auto;
+           width:auto;min-width:0;max-width:none;
+           border:0;border-top:1px solid var(--line);
+           overflow:visible;padding:14px 24px 18px 20px}
+}
+@media (max-width:640px){
+  .rows>div{grid-template-columns:1fr}
+  .tools span{grid-template-columns:1fr;margin-bottom:3px}
+}
+
+/* === print — sidebar hidden, single-column === */
+@media print{
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .wrap{max-width:none;padding:0}
+  @page{margin:14mm}
+}
 </style>
 </head>
 <body>
-<header class="bar">
-<div class="wrap">
-<nav aria-label="Contact">
-<a href="https://github.com/cyberhiten">GitHub</a>
-<a href="https://www.linkedin.com/in/hitendesai/">LinkedIn</a>
-</nav>
-<nav aria-label="Page">
-<a href="#projects">Projects</a>
-<a href="#skills">Skills</a>
-</nav>
-</div>
-</header>
-<div class="wrap">
 
+<!-- === layout grid: sidebar (208px) | main (1fr) — no phantom columns === -->
+<div class="layout">
+
+<!-- === sticky left sidebar — projects + profiles === -->
+<aside class="sidebar" aria-label="Site index">
+<div class="group projects">
+<h3>Projects</h3>
+<ul>
+<li><a href="https://cyberhiten.github.io/lotse-public/">LOTSE</a></li>
+<li><a href="https://github.com/cyberhiten/Docker-vuln-mgmt">Docker scanning</a></li>
+<li><a href="https://cyberhiten.github.io/wetter-hh/">Weather Hamburg</a></li>
+<!-- hidden for now, to be re-added later
+<li><a href="https://cyberhiten.github.io/vuln-enrichment/">Vulnerability enrichment</a></li>
+-->
+</ul>
+</div>
+
+<div class="group">
+<h3>Profiles</h3>
+<ul>
+<li><a href="https://www.linkedin.com/in/hitendesai/">LinkedIn</a></li>
+<li><a href="https://github.com/cyberhiten">GitHub</a></li>
+</ul>
+</div>
+</aside>
+
+<!-- === main column — fills the 1fr grid track === -->
+<div class="main">
+
+<!-- === main content === -->
+<div class="wrap">
 <main>
+
 <div class="hero">
 <p class="eyebrow">Information Security | Cyber Security</p>
 <h1>Hiten D.</h1>
 <p class="lead">Current state to target state: I identify gaps, build the roadmap and close them.</p>
 <div class="sub">
-<span lang="de">Informationssicherheit | Cybersicherheit &middot; Hamburg &middot; DACH</span>
+<span>Hamburg &middot; DACH</span>
 <ul class="tags" aria-label="Focus">
 <li>#InformationSecurity</li>
 <li>#GRC</li>
 </ul></div>
 </div>
 
-<section aria-label="Projects and skills">
+<section aria-label="Skills">
 <dl class="rows">
-<div><dt id="projects">Projects</dt>
-<dd><ul class="proj">
-<li><h3><a href="https://cyberhiten.github.io/lotse-public/">LOTSE</a></h3> <p>Security signals <span class="auto" role="img" aria-label="auto-updates" title="auto-updates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></span></p></li>
-<li><h3><a href="https://github.com/cyberhiten/Docker-vuln-mgmt">Docker scanning</a></h3> <p>30+ images, SBOMs</p></li>
-<li><h3><a href="https://cyberhiten.github.io/wetter-hh/">Weather Hamburg</a></h3> <p>Weekend weather bot <span class="auto" role="img" aria-label="auto-updates" title="auto-updates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></span></p></li>
-</ul></dd></div>
-<div><dt id="skills">Standards &amp; regulation</dt>
+<div><dt id="standards">Standards &amp; regulation</dt>
 <dd>ISO 27001, TISAX, VDA ISA, PCI DSS (8+ years), SOC 2, NIST, NIS2, DORA, GDPR and <span style="white-space:nowrap">BSI IT-Grundschutz</span>.</dd></div>
-<div><dt>GRC &amp; compliance</dt>
+<div><dt id="grc">GRC &amp; compliance</dt>
 <dd>Policies and procedures, cyber risk management, IT governance, third-party risk, ROPA, TOMs and internal audits across financial services (banking, fintech) and automotive. End-to-end ISO 27001, PCI DSS and TISAX audit management, from auditor selection and preparation through execution and successful assessment outcomes.</dd></div>
-<div><dt>Security operations</dt>
-<dd>AI-driven vulnerability and exposure management, including automated enrichment, threat intelligence correlation (KEV, EPSS) and risk-based prioritisation. SIEM, SOC, XDR and EDR operations, incident response, threat intelligence and cloud security across AWS and Azure environments.</dd></div>
-<div><dt>AI security &amp; governance</dt>
+<div><dt id="secops">Security operations</dt>
+<dd>AI-driven vulnerability and exposure management, including automated enrichment, threat intelligence correlation (KEV, EPSS) and risk-based prioritisation. SIEM, SOC, XDR and EDR operations, incident response, threat intelligence and cloud security across AWS and Azure environments. Data loss prevention (7 years), from evaluation of three leading products to company-wide global rollout in financial services.</dd></div>
+<div><dt id="ai">AI security &amp; governance</dt>
 <dd>Agentic AI security and access controls, AI security policies and governance frameworks, AI awareness and security training, EU AI Act alignment and organisational AI risk management.</dd></div>
-<div><dt>Tools</dt>
+<div><dt id="tools">Tools</dt>
 <dd class="tools">
 <span><b>Scanning</b> Qualys, Greenbone, Nmap, Trivy, Grype, Syft</span>
-<span><b>Monitoring</b> ArcSight, CrowdStrike, SentinelOne, Akamai</span>
+<span><b>Endpoint (EDR/XDR)</b> CrowdStrike, SentinelOne, Symantec, McAfee</span>
+<span><b>DLP</b> Symantec, Forcepoint (Websense)</span>
+<span><b>Monitoring</b> ArcSight, Akamai</span>
 <span><b>Testing and analysis</b> Kali, Metasploit, Wireshark</span>
 <span><b>Automation</b> PowerShell, Python, Bash, Docker, OSCAL</span>
 </dd></div>
-<div><dt>Security leadership</dt>
+<div><dt id="leadership">Security leadership</dt>
 <dd>Cybersecurity strategy and governance, cross-functional team leadership, board-level reporting, executive stakeholder advisory and steering committee engagement. Translating cyber risks into business decisions, aligning security priorities with organisational objectives and driving security maturity and resilience across technology, operations and business functions.</dd></div>
 </dl>
 </section>
 </main>
 </div>
+
+</div><!-- /.main -->
+
+</div><!-- /.layout -->
 </body>
 </html>
